@@ -1,0 +1,35 @@
+% =============================================
+% TUBS ADAPTIONS to FANCY BEAMER
+% =============================================
+
+% ---------------------------------------------
+% colors
+% ---------------------------------------------
+\usepackage{../tubscolors}
+
+% redefines colors used in fancybeamer and sets logos
+\colorlet{red}{tubsRed}
+\colorlet{accent}{background}
+\colorlet{accenttwo}{red}
+\setbeamercolor{logobox}{bg=background}
+\setbeamercolor{myfooter}{fg=foreground,bg=accent}
+\setbeamercolor{subtitlebox}{fg=foreground,bg=accent}
+\fancylogos{tubs,isf}
+\ifdarkmode
+  \colorlet{red}{red!90!white}
+  \colorlet{green}{green!90!white}
+  \colorlet{blue}{blue!90!white}
+  \colorlet{orange}{orange!90!white}
+  \colorlet{accenttwo}{accenttwo!25!darkgray}
+  \setbeamercolor{mypagenumber}{fg=foreground,bg=accenttwo}
+  \setbeamercolor{titlebox}{fg=foreground,bg=accenttwo}
+  \fancylogos{tubs-black,isf}
+\fi
+
+% hack to force use of changed colors
+\UpdateBoxColor{definition}{orange}
+\UpdateBoxColor{example}{blue}
+\UpdateBoxColor{note}{red}
+
+% use official logos
+\setpaths{{pics/}{../pics/}}
