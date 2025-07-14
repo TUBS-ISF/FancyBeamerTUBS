@@ -1,4 +1,8 @@
-\AtEndPreamble{\usepackage{../fancytubs}} % use the TUBS look and feel
+% This line of code just tries to find the fancybeamer package automatically. if you know the path to the fancybeamer package, you can replace the following line with \def\templatepath{path/to/fancybeamer/}
+\IfFileExists{../fancytubs.sty}{\def\templatepath{../}}{\IfFileExists{../FancyBeamerTUBS/fancytubs.sty}{\def\templatepath{../FancyBeamerTUBS/}}{\IfFileExists{./FancyBeamerTUBS/fancytubs.sty}{\def\templatepath{./FancyBeamerTUBS/}}{\def\templatepath{}}}}
+
+
+\AtEndPreamble{\usepackage{\templatepath fancytubs}} % use the TUBS look and feel
 
 % =============================================
 % FANCY BEAMER
