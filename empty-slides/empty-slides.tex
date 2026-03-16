@@ -12,6 +12,8 @@
 
 %\usepackage[ngerman]{babel} % use this line for slides in German
 
+\AtEndPreamble{\setpaths{{pics/}{../pics/}}} % specify custom paths to your pictures
+
 \title[Short Title]{Title} % short title is used for the slide footer but optional
 \subtitle[Short Subtitle]{Subtitle} % subtitles are optional at all
 \author[Short Author]{Author} % short author title is used for the slide footer but optional
@@ -21,7 +23,7 @@
 
 \begin{document}
 
-\maketitle[iz][75] % title slide with optional title picture and parameter to move it upwards
+\maketitle[iz][400] % ... with optional parameter to move it upwards
 
 \section{First Section}
 
@@ -29,5 +31,11 @@
 \begin{frame}{\insertsubsection}
     Content of first slide
 \end{frame}
+
+\againtitle
+
+% helpful to navigate to specific content, no need to show during the talk
+\contentoverview % create a content overview with one column
+%\contentoverview[3] % create a content overview with three columns
 
 \end{document}
