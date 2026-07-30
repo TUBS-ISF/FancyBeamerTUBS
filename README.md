@@ -1,65 +1,33 @@
-# Fancy Beamer Template for University Presentations
+# Fancy Beamer Template for TU Braunschweig
 
-[![latest tag](https://img.shields.io/github/v/release/SEatUPB/FancyBeamer?style=for-the-badge&labelColor=white)](https://github.com/SEatUPB/FancyBeamer/releases/latest)&emsp;[![Static Badge](https://img.shields.io/badge/LaTeX-Inside-blue?style=for-the-badge&labelColor=darkorange&color=white)](https://www.latex-project.org/)
+[![Static Badge](https://img.shields.io/badge/LaTeX-Inside-blue?style=for-the-badge&labelColor=darkorange&color=white)](https://www.latex-project.org/)
 
-This is a beamer latex template for slides in a university context and can be adapted to various corporate designs.
-The base template described here provides a set of nice features like columns with animations and nice boxes for definitions, examples, and more.
+This is a university specific specialization of the [FancyBeamer][FancyBeamer] template.
+While this fork does not add any specific (/fancy) features, [`fancytubs.sty`](fancytubs.sty) applies the color palette of TU Braunschweig to the template.
+Additionally, [`logos/`](logos/) contains the official logo of TU Braunschweig as well as the logo of the Institute of Software Engineering and Automotive Informatics&nbsp;(ISF) maintaining this fork.
 
-Originally, we developed this template specifically for ulm university at [SoftVarE-Group/SlideTemplate](https://github.com/SoftVarE-Group/SlideTemplate) but this version is no longer supported.
-For university specific versions of this template, please refer to the [list of forks](https://github.com/SEatUPB/FancyBeamer/forks).
-We encourage the format `FancyBeamer<UniversityAcronym>` for the fork names (e.g., [FancyBeamerUULM](https://github.com/sp-uulm/FancyBeamerUULM) for the university of ulm).
-
-- [Fancy Beamer Template for University Presentations](#fancy-beamer-template-for-university-presentations)
-  - [How to Use](#how-to-use)
-    - [Creating a Presentation](#creating-a-presentation)
-    - [Including the Template](#including-the-template)
-    - [Creating a Symbolic Link](#creating-a-symbolic-link)
-  - [Functionality of the Theme](#functionality-of-the-theme)
-    - [Title Page](#title-page)
-      - [Setting the Logos](#setting-the-logos)
-    - [Changing Footer Transparency](#changing-footer-transparency)
-    - [Content Overview](#content-overview)
-    - [Section Frames](#section-frames)
-    - [Slide Layout](#slide-layout)
-      - [Old Macros for Slide Layouts](#old-macros-for-slide-layouts)
-    - [Unique Slide-Numbering](#unique-slide-numbering)
-    - [Color Boxes](#color-boxes)
-      - [Custom Color Boxes](#custom-color-boxes)
-      - [Counting Color Boxes](#counting-color-boxes)
-      - [Old Macros for Boxes](#old-macros-for-boxes)
-    - [Dark Mode](#dark-mode)
-    - [Including Pictures](#including-pictures)
-      - [Automatic Dark Mode for Pictures](#automatic-dark-mode-for-pictures)
-    - [Other Functionalities](#other-functionalities)
+- [How to Use](#how-to-use)
+- [Functionality of the Theme](#functionality-of-the-theme)
+  - [Title Page](#title-page)
+    - [Setting the Logos](#setting-the-logos)
+  - [Changing Footer Transparency](#changing-footer-transparency)
+  - [Content Overview](#content-overview)
+  - [Section Frames](#section-frames)
+  - [Slide Layout](#slide-layout)
+    - [Old Macros for Slide Layouts](#old-macros-for-slide-layouts)
+  - [Unique Slide-Numbering](#unique-slide-numbering)
+  - [Color Boxes](#color-boxes)
+    - [Custom Color Boxes](#custom-color-boxes)
+    - [Counting Color Boxes](#counting-color-boxes)
+    - [Old Macros for Boxes](#old-macros-for-boxes)
+  - [Dark Mode](#dark-mode)
+  - [Including Pictures](#including-pictures)
+    - [Automatic Dark Mode for Pictures](#automatic-dark-mode-for-pictures)
+  - [Other Functionalities](#other-functionalities)
 
 ## How to Use
 
 If you are interested in a quickstart, have a look at our [demo-slides.tex](demo-slides/demo-slides.tex) or [empty-slides.tex](empty-slides/empty-slides.tex) files.
-
-### Creating a Presentation
-
-First, you need to create a new beamer presentation. For that, add
-
-```tex
-\documentclass[aspectratio=169]{beamer}
-```
-
-to your `.tex`-file. We recommend a font size of around 8pt for online presentations so you can use  `\documentclass[aspectratio=169,8pt]{beamer}`.
-
-### Including the Template
-
-Everything you desire(/require) is within the [`fancybeamer.sty`](fancybeamer.sty) file. To include it, add a line like `\usepackage{fancybeamer}` to your `.tex`-file. In general, LaTeX requires the (relative) path to the package, so depending on how you include the package (given that you do not install it in your local texmf tree), you might need to adjust the path:
-
-``tex
-\usepackage{path/to/fancybeamer}
-``
-
-### Creating a Symbolic Link
-
-To use the template from another directory, you can create a symbolic link to the directory of the cloned template. The terminal-commands to create such links vary between different operating systems:
-
-- **Windows:** `mklink /J \path\to\slides\template path\to\template`
-- **Linux/macOS:** `ln -s /path/to/template /path/to/slides/template`
 
 ## Functionality of the Theme
 
