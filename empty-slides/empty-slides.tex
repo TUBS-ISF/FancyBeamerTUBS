@@ -6,7 +6,7 @@
 	%sectiontitleslides, % enable an automatic section title slide at the begin of each section
 	%sectionoverviews, % enable an automatic section overview at the begin of each section
 	%uniqueslidenumber, % will uniquely identify pages with overlays by a little suffix
-	%darkmode, % switch to dark mode (do not use for presentation with a projector)
+	darkmode, % switch to dark mode (do not use for presentation with a projector)
 ]{beamer}
 \usepackage{../fancybeamer} % use the fancy beamer package
 
@@ -19,7 +19,11 @@
 \author[Short Author]{Author} % short author title is used for the slide footer but optional
 \date{\today} % use a particular date here if needed
 
-% \fancylogos{,example-image-a} % define logos that are spread evenly across the bottom of the title slide
+\ifdarkmode
+	\fancylogos{\templatepath pics/tubs-black,\templatepath pics/isf-black}
+\else
+	\fancylogos{\templatepath pics/tubs,\templatepath pics/isf}
+\fi
 
 \begin{document}
 

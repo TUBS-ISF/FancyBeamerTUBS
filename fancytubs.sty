@@ -5,25 +5,26 @@
 % ---------------------------------------------
 % colors
 % ---------------------------------------------
-\usepackage{\templatepath tubscolors}
+\usepackage{\templatepath cdColors}
 
 % redefines colors used in fancybeamer and sets logos
-\colorlet{red}{tubsRed}
+\colorlet{red}{tuRed}
 \colorlet{accent}{background}
 \colorlet{accenttwo}{red}
+\colorlet{green}{tuGreen}
+\colorlet{blue}{tuDarkBlue}
+\colorlet{orange}{tuOrange}
 \setbeamercolor{logobox}{bg=background}
 \setbeamercolor{myfooter}{fg=foreground,bg=accent}
 \setbeamercolor{subtitlebox}{fg=foreground,bg=accent}
-\fancylogos{\templatepath pics/tubs,\templatepath pics/isf}
 \ifdarkmode
   \colorlet{red}{red!90!white}
   \colorlet{green}{green!90!white}
-  \colorlet{blue}{blue!90!white}
+  \colorlet{blue}{blue!70!white}
   \colorlet{orange}{orange!90!white}
   \colorlet{accenttwo}{accenttwo!25!darkgray}
   \setbeamercolor{mypagenumber}{fg=foreground,bg=accenttwo}
   \setbeamercolor{titlebox}{fg=foreground,bg=accenttwo}
-  \fancylogos{\templatepath pics/tubs-black,\templatepath pics/isf}
 \fi
 
 % hack to force use of changed colors
