@@ -1,9 +1,3 @@
-% This line of code just tries to find the fancybeamer package automatically. if you know the path to the fancybeamer package, you can replace the following line with \def\templatepath{path/to/fancybeamer/}
-\IfFileExists{../fancytubs.sty}{\def\templatepath{../}}{\IfFileExists{../FancyBeamerTUBS/fancytubs.sty}{\def\templatepath{../FancyBeamerTUBS/}}{\IfFileExists{./FancyBeamerTUBS/fancytubs.sty}{\def\templatepath{./FancyBeamerTUBS/}}{\IfFileExists{../submodules/FancyBeamerTUBS/fancytubs.sty}{\def\templatepath{../submodules/FancyBeamerTUBS/}}{\IfFileExists{./submodules/FancyBeamerTUBS/fancytubs.sty}{\def\templatepath{./submodules/FancyBeamerTUBS/}}{\def\templatepath{}}}}}}
-
-
-\AtEndPreamble{\usepackage{\templatepath fancytubs}} % use the TUBS look and feel
-
 % =============================================
 % FANCY BEAMER
 % =============================================
@@ -121,6 +115,9 @@
 % frame layout
 % ---------------------------------------------
 
+\def\fancy@titlefooter@transparency{1}
+\def\settitlefootertransparency#1{\def\fancy@titlefooter@transparency{#1}}
+
 % we use this flag as a helper to toggle extra behavior when constructing the logos
 \newif\iffancy@logos@first@
 
@@ -132,7 +129,7 @@
     \@for\@image:={#2}\do{%
         \iffancy@logos@first@\fancy@logos@first@false\else\hskip0pt plus 1filll\fi
         \ifthenelse{\equal{\@image}{}}{}{%
-            \pic[height=4.5ex,#1]{\@image}%
+            \pic[height=2.5ex,#1]{\@image}%
         }%
     }%
 }}
@@ -156,15 +153,16 @@
             \ifx \insertdate \empty \else \insertdate \fi
         \end{beamercolorbox}%
         \nointerlineskip
+        \ifdim\fancy@titlefooter@transparency\p@=\p@\else\pgfsetfillopacity{\fancy@titlefooter@transparency}\fi
         \begin{beamercolorbox}[wd=\paperwidth,ht=4.5ex,dp=2ex,leftskip=\fancy@titlepage@margin,rightskip=\fancy@titlepage@margin]{logobox}
-            \vspace{-1ex}%
+            \ifdim\fancy@titlefooter@transparency\p@=\p@\else\pgfsetfillopacity{1}\fi\vspace{-1ex}%
             \fancy@logoline
         \end{beamercolorbox}%
     \end{frame}
     }
 }
 
-\renewcommandx{\maketitle}[2][1=apr21-o25a,2=0]{
+\renewcommandx{\maketitle}[2][1=example-image,2=0]{
     \gdef\fancytitlepicture{#1}
     \gdef\fancytitlepictureoffset{#2}
     \@createtitleslide
@@ -191,7 +189,7 @@
     \def\fancy@page{\insertframenumber}
 \fi
 \setbeamertemplate{footline}{
-    \hypersetup{linkcolor = white}
+    \hypersetup{linkcolor = .} % this use the footer color for the links in the footer
     \hbox{%
         \begin{beamercolorbox}[wd=0.93\textwidth,ht=3mm,dp=1.5mm,left]{myfooter}
             \hspace{0.03\textwidth}
@@ -591,10 +589,15 @@
 \newenvironment{fancycolumns}[1][]{\begingroup
 \pgfqkeys{/fancy columns}{@defaults, #1}%
 \edef\fancy@previous@fancy@cols{\thefancy@cols@current}% store the current column counter
+% Preserve outer column and overlay state so nested fancycolumns
+% do not reset the parent animation sequence
+\edef\fancy@previous@fancy@colsanim{\thefancy@cols@currentanim}%
 \ifdim\fancy@cols@height<0pt\begin{minipage}{\fancy@cols@target@width}\else\begin{minipage}[\fancy@cols@valign][\fancy@cols@height]{\fancy@cols@target@width}\fi%
 \begin{columns}[onlytextwidth,\fancy@cols@valign, \fancy@cols@extra]
     \fancy@cols@init
-}{\end{columns}\end{minipage}\setcounter{fancy@cols@current}{\fancy@previous@fancy@cols}\endgroup}
+% Restore the parent column and overlay counters after nested
+% fancycolumns has finished.
+}{\end{columns}\end{minipage}\setcounter{fancy@cols@current}{\fancy@previous@fancy@cols}\setcounter{fancy@cols@currentanim}{\fancy@previous@fancy@colsanim}\endgroup}
 
 % ---------------------------------------------
 % color boxes
@@ -609,6 +612,9 @@
         before title={\setlength{\parskip}{0ex}\vphantom{/}\let\boxnumber\thetcbcounter\csname fancy@box@#5@titleprefix\endcsname},
         after title={\let\boxnumber\thetcbcounter\csname fancy@box@#5@titlesuffix\endcsname},
         before upper={\parskip\z@\relax},
+        box align=base,
+        nobeforeafter,
+        after skip balanced=4pt,
         fonttitle=\bfseries,
         left=#4, right=#4, top=#4, bottom=#4, bottomtitle=-.5mm,
         #1
@@ -692,18 +698,18 @@
 % => \myexample and \myexampletight
 % furthermore defines the environment \begin{example}{<title>} ... \end{example}
 \fancy@DeclareBox{example}{blue}
-% => \mynote and \mynotetight
-% furthermore defines the environment \begin{note}{<title>} ... \end{note}
-\fancy@DeclareBox{note}{red}
+% => \myinfo and \myinfotight
+% furthermore defines the environment \begin{info}{<title>} ... \end{info}
+\fancy@DeclareBox{info}{red}
 
 % ---------------------------------------------
 % Pictures
 % ---------------------------------------------
 % GRAPHICSPATH
 \makeatletter
-\newcommand{\setpaths}[1]{
+\newcommand*{\setpaths}[1]{
 	\appto\Ginput@path{#1} % for loading pictures
-	\def\input@path{#1} % for loading picture sources
+	\appto\input@path{#1} % for loading picture sources
 }
 \makeatother
 
@@ -711,9 +717,20 @@
 \newcommand\hreffile[1]{%
 	\CatchFileDef\myurl{#1}{\catcode`\#=12\catcode`\%=12\endlinechar=-1}%
 	\expandafter\href\expandafter{\myurl}}
+	
+\newcommand{\picdefaultopts}{valign=c}
+
+\makeatletter
+\def\internal@adjincludegraphics#1#2#3{%
+	\adjincludegraphics[#1, #2]{#3}%
+}%
+
 \newcommand{\pic}[2][]{%
-    \IfFileExists{#2.txt}{\hreffile{#2.txt}}{}{\adjincludegraphics[#1]{#2}}
+	\IfFileExists{#2.txt}{\hreffile{#2.txt}}{}{\expandafter\internal@adjincludegraphics\expandafter{\picdefaultopts}{#1}{#2}}%
 }
+
+\makeatother
+	
 \newcommand{\picDark}[2][]{\pic[#1]{#2}}
 \ifdarkmode
 	\renewcommand{\picDark}[2][]{%
@@ -722,3 +739,16 @@
 		\pic[#1,decodearray={1 .25 1 .25 1 .25}]{#2}}}%
 	}
 \fi
+% ---------------------------------------------
+% warnings for float environments
+% ---------------------------------------------
+
+\newcommand{\floatwarning}[1]{%
+    \PackageWarning{fancybeamer}
+    {Float environment '#1' used on line \the\inputlineno. \MessageBreak
+    For consistent styling, consider replacing it\MessageBreak
+    with exampletight, infotight, or another tight box}%
+}
+
+\AddToHook{env/figure/begin}{\floatwarning{figure}}
+\AddToHook{env/table/begin}{\floatwarning{table}}

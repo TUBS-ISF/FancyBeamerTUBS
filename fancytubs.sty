@@ -1,3 +1,8 @@
+% This line of code just tries to find the fancybeamer package automatically. if you know the path to the fancybeamer package, you can replace the following line with \def\templatepath{path/to/fancybeamer/}
+\IfFileExists{../fancytubs.sty}{\def\templatepath{../}}{\IfFileExists{../FancyBeamerTUBS/fancytubs.sty}{\def\templatepath{../FancyBeamerTUBS/}}{\IfFileExists{./FancyBeamerTUBS/fancytubs.sty}{\def\templatepath{./FancyBeamerTUBS/}}{\IfFileExists{../submodules/FancyBeamerTUBS/fancytubs.sty}{\def\templatepath{../submodules/FancyBeamerTUBS/}}{\IfFileExists{./submodules/FancyBeamerTUBS/fancytubs.sty}{\def\templatepath{./submodules/FancyBeamerTUBS/}}{\def\templatepath{}}}}}}
+
+\usepackage{\templatepath fancybeamer}
+
 % =============================================
 % TUBS ADAPTIONS to FANCY BEAMER
 % =============================================
@@ -5,30 +10,43 @@
 % ---------------------------------------------
 % colors
 % ---------------------------------------------
-\usepackage{\templatepath tubscolors}
+\usepackage{\templatepath cdColors}
 
 % redefines colors used in fancybeamer and sets logos
-\colorlet{red}{tubsRed}
+\colorlet{red}{tuRed}
 \colorlet{accent}{background}
 \colorlet{accenttwo}{red}
+\colorlet{green}{tuGreen}
+\colorlet{blue}{tuDarkBlue}
+\colorlet{orange}{tuOrange}
 \setbeamercolor{logobox}{bg=background}
 \setbeamercolor{myfooter}{fg=foreground,bg=accent}
 \setbeamercolor{subtitlebox}{fg=foreground,bg=accent}
-\fancylogos{\templatepath pics/tubs,\templatepath pics/isf}
 \ifdarkmode
   \colorlet{red}{red!90!white}
   \colorlet{green}{green!90!white}
-  \colorlet{blue}{blue!90!white}
+  \colorlet{blue}{blue!70!white}
   \colorlet{orange}{orange!90!white}
   \colorlet{accenttwo}{accenttwo!25!darkgray}
   \setbeamercolor{mypagenumber}{fg=foreground,bg=accenttwo}
   \setbeamercolor{titlebox}{fg=foreground,bg=accenttwo}
-  \fancylogos{\templatepath pics/tubs-black,\templatepath pics/isf}
 \fi
 
 % hack to force use of changed colors
 \UpdateBoxColor{definition}{orange}
 \UpdateBoxColor{example}{blue}
 \UpdateBoxColor{note}{red}
+
+%logos
+\newcommand{\logoisf}{\templatepath pics/isf}
+\newcommand{\logotubs}{\templatepath pics/tubs}
+
+\newcommand{\defaultlogos}{%
+	\ifdarkmode%
+		\fancylogos{\templatepath pics/tubs-black,\templatepath pics/isf-black}%
+	\else%
+		\fancylogos{\templatepath pics/tubs,\templatepath pics/isf}%
+	\fi%
+}%
 
 
