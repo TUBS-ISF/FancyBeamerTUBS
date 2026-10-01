@@ -195,7 +195,7 @@
     \def\fancy@page{\insertframenumber}
 \fi
 \setbeamertemplate{footline}{
-    \hypersetup{linkcolor = white}
+    \hypersetup{linkcolor = .} % this use the footer color for the links in the footer
     \hbox{%
         \begin{beamercolorbox}[wd=0.93\textwidth,ht=3mm,dp=1.5mm,left]{myfooter}
             \hspace{0.03\textwidth}
@@ -745,3 +745,16 @@
 		\pic[#1,decodearray={1 .25 1 .25 1 .25}]{#2}}}%
 	}
 \fi
+% ---------------------------------------------
+% warnings for float environments
+% ---------------------------------------------
+
+\newcommand{\floatwarning}[1]{%
+    \PackageWarning{fancybeamer}
+    {Float environment '#1' used on line \the\inputlineno. \MessageBreak
+    For consistent styling, consider replacing it\MessageBreak
+    with exampletight, infotight, or another tight box}%
+}
+
+\AddToHook{env/figure/begin}{\floatwarning{figure}}
+\AddToHook{env/table/begin}{\floatwarning{table}}
