@@ -8,7 +8,7 @@
 	%uniqueslidenumber, % will uniquely identify pages with overlays by a little suffix
 	%darkmode, % switch to dark mode (do not use for presentation with a projector)
 ]{beamer}
-\usepackage{../fancybeamer} % use the fancy beamer package
+\usepackage{../fancytubs} % use the fancy tubs package
 
 %\usepackage[ngerman]{babel} % use this line for slides in German
 
@@ -21,11 +21,8 @@
 \author[Short Author]{Long Author} % short author title is used for the slide footer but optional
 \date{\today} % use a particular date here if needed
 
-\ifdarkmode
-	\fancylogos{\templatepath pics/tubs-black,\templatepath pics/isf-black}
-\else
-	\fancylogos{\templatepath pics/tubs,\templatepath pics/isf}
-\fi
+\defaultlogos{} %default ISF logos
+%\fancylogos{\logotubs, \logoisf} %alternative for custom logos
 
 
 % \settitlefootertransparency{.3} % set the transparency of the title footer 
